@@ -1,19 +1,76 @@
 #include <iostream>
-
+#include <cstdlib>
+#include <locale.h>
+#include<cstdio>
+#include<stdio.h>
 using namespace std;
 
-int main()
+int menya(int n, char* buff, char* p_str, char* nstr, int p, int u)
 {
-	int n,u, c,p,k,o,count=0,num=0;
-	cin >> n;
-
-	char* str = new char[n];
-
-	for (int i = 0; i < n; i++)
+	int o;
+	int count = 0;
+	int k = 0;
+	int num = 0;
+	for (int i = 0; i <= n - p; i++)
 	{
-		cin>>str[i];
+		k = 0;
+		for (int j = 0; j < p; j++)
+		{
+			if (buff[i + j] == p_str[j])
+			{
+				k++;
+			}
+		}
+		if (k == p)
+		{
+			count++;
+			i += p - 1;
+		}
 	}
 
+	o = n + count * (u - p);
+
+	char* ans = new char[o];
+	for (int i = 0; i < n; i++)
+	{
+		k = 0;
+		for (int j = 0; j < p; j++)
+		{
+			if (buff[i + j] == p_str[j])
+			{
+				k++;
+			}
+		}
+		if (k == p)
+		{
+			count++;
+			for (int z = 0; z < u; z++)
+			{
+				ans[num] = nstr[z];
+				num++;
+			}
+			i += p - 1;
+		}
+		else
+		{
+			if (buff[i] != '\n')
+			{
+				ans[num] = buff[i];
+				num++;
+			}		
+		}
+	}
+	for (int i = 0; i < o; i++)
+	{
+		cout << ans[i];
+	}
+	return count;
+}
+
+int main()
+
+{
+	int n, u, c, p, k, m ,j = 0;
 	cin >> p;
 	char* p_str = new char[p];
 
@@ -28,55 +85,25 @@ int main()
 	{
 		cin >> nstr[i];
 	}
-	
-	for (int i = 0; i <= n - p; i++)
+	setlocale(LC_ALL, "Russian");
+	char in[] = "war and peace.txt";
+	FILE** pRead = new FILE*;
+	freopen_s(pRead,in, "r", stdin);
+	if (*pRead != 0)
 	{
-		k = 0;
-		for (int j = 0; j < p; j++)
+		char buff[5000];
+		m = 0;
+		while (gets_s(buff, 5000))
 		{
-			if (str[i + j] == p_str[j])
+			n = 0;
+			while (buff[j] != '\n')
 			{
-				k++;
+				j++;
+				n++;
 			}
+			m += menya(n,buff,p_str, nstr, p, u);
+			cout << endl;
+			
 		}
-		if (k == p)
-		{
-			count++;
-			i += p-1;
-		}
-	}
-	
-	o = n + count * (u-p)
-
-	char* ans = new char[o];
-	for (int i = 0; i < n; i++)
-	{
-		k = 0;
-		for (int j = 0; j < p; j++)
-		{
-			if (str[i + j] == p_str[j])
-			{
-				k++;
-			}
-		}
-		if (k == p)
-		{
-			count++;
-			for (int z = 0; z < u; z++)
-			{
-				ans[num] = nstr[z];
-				num++;
-			}
-			i += p-1;
-		}
-		else
-		{
-			ans[num] = str[i];
-			num++;
-		}
-	}
-	for (int i = 0; i < o; i++)
-	{
-		cout << ans[i];
 	}
 }

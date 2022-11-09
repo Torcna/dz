@@ -46,7 +46,7 @@ int main()
 		}
 	}
 	
-	o = n - count * p + count * u;
+	o = n + count * (u-p)
 
 	char* ans = new char[o];
 	for (int i = 0; i < n; i++)
@@ -67,7 +67,7 @@ int main()
 				ans[num] = nstr[z];
 				num++;
 			}
-			i += p;
+			i += p-1;
 		}
 		else
 		{
